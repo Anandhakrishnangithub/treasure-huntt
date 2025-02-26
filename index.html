@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Hunt: THE TERMINATOR TRIAL</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://i.pinimg.com/474x/31/8b/d4/318bd459d34a80bfe3f2f221a88ae2c6.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px #fff, 0 0 25px #00f, 0 0 5px #00f;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .hint-section,
+        .key-section {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 15px;
+            font-size: 1.3em;
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 8px;
+            border: 2px solid #fff;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"].correct {
+            border-color: #28a745;
+            animation: flashGreen 0.5s ease;
+        }
+
+        input[type="text"].incorrect {
+            border-color: #dc3545;
+            animation: flashRed 0.5s ease;
+        }
+
+        .button {
+            padding: 15px 25px;
+            font-size: 1.5em;
+            margin-top: 20px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .back-button {
+            background-color: #FF6347;
+            margin-top: 15px;
+            padding: 15px 25px;
+            font-size: 1.3em;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #e53e30;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .congratulations {
+            font-size: 1.7em;
+            color: #ffcc00;
+            font-weight: bold;
+            margin-top: 30px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes flashGreen {
+            0% {
+                border-color: #fff;
+            }
+
+            50% {
+                border-color: #28a745;
+            }
+
+            100% {
+                border-color: #fff;
+            }
+        }
+
+        @keyframes flashRed {
+            0% {
+                border-color: #fff;
+            }
+
+            50% {
+                border-color: #dc3545;
+            }
+
+            100% {
+                border-color: #fff;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--color);
+            opacity: 0;
+            animation: confetti-fall 3s ease-out infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .button,
+            input[type="text"],
+            .back-button {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <h1>Treasure Hunt: THE TERMINATOR TRIAL</h1>
+
+        <!-- Page 1 -->
+        <div id="page-1" class="section">
+            <div class="hint-section">
+                <p class="hint">Q1. Start of every thing, He made the thing, My mind could not be Bought. Is a father,
+                    But not yours, But what you learn. A place in his honour, Now it's your turn.</p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-1" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(1)">Next</button>
+                <button class="back-button" onclick="goBack(1)">Back</button>
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div id="page-2" class="section hidden">
+            <div class="hint-section">
+                <p class="hint">Q2. I hold those who move But never walk, in the dust or the rain, I am whom for the
+                    iron hearts. By the day they come, by night they flew, find your clue where they rest with glee.</p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-2" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(2)">Next</button>
+                <button class="back-button" onclick="goBack(2)">Back</button>
+            </div>
+        </div>
+
+        <!-- Page 3 -->
+        <div id="page-3" class="section hidden">
+            <div class="hint-section">
+                <p class="hint">Q3. I see your steps before you take, you come and go under my eyes, I have all the
+                    powers but controlled by them. I have a room but take less rest. For your next clue. Come pay heed
+                    my hat, I'm the one in blue.</p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-3" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(3)">Next</button>
+                <button class="back-button" onclick="goBack(3)">Back</button>
+            </div>
+        </div>
+
+        <!-- Page 4 -->
+        <div id="page-4" class="section hidden">
+            <div class="hint-section">
+                <p class="hint">Q4. Echoes of knowledge fill this space, where minds converge to keep the pace. Needs
+                    guts to stand alone, but goes by group. Your clue is hidden in front of a large TV.</p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-4" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(4)">Next</button>
+                <button class="back-button" onclick="goBack(4)">Back</button>
+            </div>
+        </div>
+
+        <!-- Page 5 -->
+        <div id="page-5" class="section hidden">
+            <div class="hint-section">
+                <p class="hint">Q5. No voice to talk but a lot to tell, holds multiverse, but lives in wooden shelf.
+                    Gives treasures but need no price. I'm a nerd's heaven. At least visit me once you fool.</p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-5" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(5)">Next</button>
+                <button class="back-button" onclick="goBack(5)">Back</button>
+            </div>
+        </div>
+
+        <!-- Page 6 -->
+        <div id="page-6" class="section hidden">
+            <div class="hint-section">
+                <p class="hint">Q6. I am a glass box holding some scraps, news or warnings always inbound. I am near
+                    where decisions arise. You always see me when you come to pay the fee. NOTICE me?</p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-6" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(6)">Next</button>
+                <button class="back-button" onclick="goBack(6)">Back</button>
+            </div>
+        </div>
+
+        <!-- Page 7 -->
+        <div id="page-7" class="section hidden">
+            <div class="hint-section">
+                <p class="hint">Q7. A silent saviour standing by, I save people but never go to them, change me daily or
+                    I change your health. Find me where I save the day. I'm on every level, but meet me just 1 level up.
+                </p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-7" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(7)">Next</button>
+                <button class="back-button" onclick="goBack(7)">Back</button>
+            </div>
+        </div>
+
+        <!-- Page 8 -->
+        <div id="page-8" class="section hidden">
+            <div class="hint-section">
+                <p class="hint">Q8. I break the code of stress and strain. The only place where your mind becomes free,
+                    there is no screen but some may screen you. Healthy it is, but no one promotes it. Just think what
+                    period you miss the most.</p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-8" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(8)">Next</button>
+                <button class="back-button" onclick="goBack(8)">Back</button>
+            </div>
+        </div>
+
+        <!-- Page 9 -->
+        <div id="page-9" class="section hidden">
+            <div class="hint-section">
+                <p class="hint">Q9. Is it the end of the beginning or the beginning of the end? The path is a circle,
+                    stop circling around, complete the cycle before anyone does. The answer to the end is in the
+                    beginning. Go BACK to the beginning.</p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-9" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(9)">Next</button>
+                <button class="back-button" onclick="goBack(9)">Back</button>
+            </div>
+        </div>
+
+        <!-- Page 10 -->
+        <div id="page-10" class="section hidden">
+            <div class="hint-section">
+                <p class="hint">Q10. Looks like the quest is over, someone already completed the quest or just combine
+                    the keys to finish it...</p>
+            </div>
+            <div class="key-section">
+                <input type="text" id="key-10" placeholder="Enter key here">
+                <button class="button" onclick="checkKey(10)">Next</button>
+                <button class="back-button" onclick="goBack(10)">Back</button>
+            </div>
+        </div>
+
+
+        <div id="congratulations" class="section hidden">
+            <p class="congratulations">CONGRATULATIONS, YOU HAVE PASSED THE TRIAL!</p>
+        </div>
+
+
+        <div class="confetti" id="confetti"></div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+
+       
+
+
+        function triggerCelebration() {
+            const confetti = document.getElementById('confetti');
+            confetti.style.display = 'block';
+
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            });
+    
+    
+            for (let i = 0; i < 100; i++) {
+                let confettiPiece = document.createElement('div');
+                confettiPiece.classList.add('confetti-piece');
+                confettiPiece.style.left = `${Math.random() * 100}%`;
+                confettiPiece.style.top = `${Math.random() * 100}%`;
+                confettiPiece.style.background = getRandomColor();
+                confettiPiece.style.animationDelay = `${Math.random() * 3}s`;
+                confetti.appendChild(confettiPiece);
+            }
+        }
+
+
+        function getRandomColor() {
+            const colors = ['#FF69B4', '#FFC67D', '#8BC34A', '#4CAF50', '#03A9F4'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+
+        function checkKey(page) {
+            const userInput = document.getElementById(`key-${page}`).value.trim();
+
+            fetch("http://localhost:3000/check-key", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ page, key: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`page-${page}`).classList.add('hidden');
+                    if (page < 10) {
+                        document.getElementById(`page-${page + 1}`).classList.remove('hidden');
+                    } else {
+                        document.getElementById('congratulations').classList.remove('hidden');
+                        triggerCelebration();
+                    }
+                } else {
+                    document.getElementById(`key-${page}`).classList.add('incorrect');
+                }
+            });
+        }
+
+
+        function goBack(page) {
+            document.getElementById(`page-${page}`).classList.add('hidden');
+            document.getElementById(`page-${page - 1}`).classList.remove('hidden');
+        }
+    </script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
