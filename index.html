@@ -415,7 +415,7 @@
         function checkKey(page) {
             const userInput = document.getElementById(`key-${page}`).value.trim();
 
-            fetch("http://localhost:3000/check-key", {
+            fetch("https://treasure-huntt-1.onrender.com/check-key", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ page, key: userInput })
